@@ -1,10 +1,10 @@
 
 .link {
-    color: $dark-grey;
-    text-decoration: none;
     align-items: center;
+    color: $dark-grey;
     display: flex;
     justify-content: center;
+    text-decoration: none;
     width: 100%;
 
     &:hover {
