@@ -1,12 +1,15 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import validator from 'validator';
 import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth';
+import { removeError, setError } from '../../actions/ui';
 import { useForm } from '../../hooks/useForm';
 
 export const LoginScreen = () => {
 
     const dispatch = useDispatch();
+    const { msgError, loading } = useSelector(state => state.ui)
 
     const [ formValues, handleInputChange ] = useForm({
         email: 'test@gmail.com',
@@ -18,8 +21,23 @@ export const LoginScreen = () => {
     const handleLogin = (e) => {
 
         e.preventDefault();
-        dispatch( startLoginEmailPassword( email, password ) );
 
+        if ( isLoginValid() ) {
+            dispatch( startLoginEmailPassword( email, password ) );
+        }
+    }
+
+    const isLoginValid = () => {
+        if ( email.trim().length === 0 || !validator.isEmail( email )) {
+            dispatch( setError('Email is required'));
+            return false;
+        } else if ( password.trim().length === 0 ){
+            dispatch( setError('Password is required'));
+            return false;
+        }
+
+        dispatch( removeError() );
+        return true;
     }
 
     const handleGoogleLogin = () => {
@@ -32,6 +50,13 @@ export const LoginScreen = () => {
             <h3 className="auth__title">Login</h3>
 
             <form onSubmit={ handleLogin }>
+
+            {
+                msgError &&
+                <div className="auth__alert-error">
+                    { msgError }
+                </div>
+            }
 
                 <input
                     type="text"
@@ -54,7 +79,8 @@ export const LoginScreen = () => {
 
                 <button 
                     type="submit"
-                    className="btn btn-primary btn-block" 
+                    className="btn btn-primary btn-block"
+                    disabled={ loading } 
                 >
                     Login
                 </button>
