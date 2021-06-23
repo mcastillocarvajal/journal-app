@@ -22,7 +22,7 @@ export const fileUpload = async( file ) => {
 
         } else {
 
-            throw await resp.json();
+            return null
         }
     } catch ( error ) {
         throw error;
