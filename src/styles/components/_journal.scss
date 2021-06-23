@@ -41,7 +41,7 @@
 .journal__entries {
     flex: 1 1 auto;
     margin-top: 30px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .journal__entry {
@@ -56,7 +56,7 @@
 
 .journal__entry-picture {
     height: 75px;
-    width: 75px;
+    width: 100px;
 }
 
 .journal__entry-body{
