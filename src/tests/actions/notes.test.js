@@ -15,6 +15,13 @@ const mockStore = configureStore(middlewares);
 const initState = {
     auth: {
         uid: 'testing'
+    },
+    notes: {
+        active: {
+            id: '9bOATfdvCJC0YFTTwMA7',
+            title: 'title',
+            body: 'body'
+        }
     }
 }
 let store = mockStore( initState )
